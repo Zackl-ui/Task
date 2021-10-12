@@ -19,10 +19,12 @@ const SignUP = (data, setLoginLeft) => {
 };
 const Sign_In = (data) => {
   localStorage.setItem("token", data.token);
+  localStorage.setItem("role", data.role[0].name);
   return {
     type: "LOGIN",
     payload: data,
     token: data.token,
+    role: data.role[0].name,
   };
 };
 const SetToken = () => {

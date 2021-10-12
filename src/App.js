@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
+import Routes from "./routes";
 import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Login}></Route>
+        <Routes />
       </Switch>
     </Router>
   );
