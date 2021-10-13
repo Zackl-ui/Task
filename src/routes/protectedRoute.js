@@ -9,7 +9,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       exact
       render={(props) =>
-        localStorage.getItem("token") && localStorage.getItem("role") ? (
+        localStorage.getItem("token") ? (
           <AppLayout>
             <Component {...props} />
           </AppLayout>

@@ -1,10 +1,13 @@
 import axios from "axios";
-const SignIn = (data) => {
+const SignIn = (data, history) => {
   console.log(data);
   return (dispatch) => {
     axios
       .post("http://34.210.129.167/api/login", { ...data }, {})
-      .then((response) => dispatch(Sign_In(response.data)))
+      .then((response) => {
+        dispatch(Sign_In(response.data));
+        history.push("/users");
+      })
       .catch((err) => console.log(err));
   };
 };
@@ -19,12 +22,12 @@ const SignUP = (data, setLoginLeft) => {
 };
 const Sign_In = (data) => {
   localStorage.setItem("token", data.token);
-  localStorage.setItem("role", data.role[0].name);
+  localStorage.setItem("role", data.user.roles[0].name);
   return {
     type: "LOGIN",
     payload: data,
     token: data.token,
-    role: data.role[0].name,
+    role: data.user.roles[0].name,
   };
 };
 const SetToken = () => {

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./index.css";
 import { useDispatch } from "react-redux";
 import { SignIn, SignUP } from "../../redux/actions/auth";
+import { useHistory } from "react-router-dom";
 function Login() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -171,7 +173,7 @@ function Login() {
                   <button
                     type="submit"
                     onClick={() => {
-                      dispatch(SignIn({ email, password }));
+                      dispatch(SignIn({ email, password }, history));
                       HandleEmpty();
                     }}
                   >
