@@ -35,7 +35,7 @@ function Login() {
                 </a>
 
                 <div class="heading">
-                  <h2>Bilal</h2>
+                  <h2>Time Manager</h2>
                   <p>Your Right Choice</p>
                 </div>
 

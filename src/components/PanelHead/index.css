@@ -31,3 +31,14 @@
   line-height: 26px;
   letter-spacing: 1px;
 }
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100vh - 180px);
+}
+.panel-top .logout button {
+  background-color: transparent !important;
+  border: none;
+  color: #fff;
+}

@@ -4,6 +4,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SetToken } from "./redux/actions/auth";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -12,6 +13,7 @@ function App() {
   return (
     <Router>
       <Switch>
+        
         <Routes />
       </Switch>
     </Router>

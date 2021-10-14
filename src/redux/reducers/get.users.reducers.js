@@ -1,6 +1,8 @@
 const obj = {
   data: [],
   user: {},
+  totalPage:'',
+  page: 1,
 };
 const GetUser = (state = obj, action) => {
   switch (action.type) {
@@ -8,11 +10,17 @@ const GetUser = (state = obj, action) => {
       return {
         ...state,
         data: action.payload,
+        totalPage: action.pages,
       };
     case "EDIT_USER":
       return {
         ...state,
         user: action.payload,
+      };
+    case "SET_PAGE":
+      return {
+        ...state,
+        page: action.payload,
       };
     default:
       return state;
