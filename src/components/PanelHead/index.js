@@ -14,7 +14,7 @@ const PanelHead = () => {
             <Link to="/users">Users</Link>
           </li>
           <li>
-            <Link>WorkLog</Link>
+            <Link to="/work-logs">WorkLog</Link>
           </li>
         </ul>
         <div className="logout">

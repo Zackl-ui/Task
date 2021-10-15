@@ -126,8 +126,12 @@ const Users = () => {
             </Form.Group>
           </div>
           <div className="add">
-            <button onClick={openModalAdd}>
+            <button
+              onClick={openModalAdd}
+              className="d-flex align-items-center"
+            >
               <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              <h6 className="mb-0 ml-2">Add User</h6>
             </button>
           </div>
         </div>
