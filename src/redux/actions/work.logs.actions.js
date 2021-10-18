@@ -12,6 +12,19 @@ export const GetLogs = () => {
       .catch((err) => console.log(err));
   };
 };
+export const GetSpecLogs = (id) => {
+  const token = localStorage.getItem("token");
+  return (dispatch) => {
+    axios
+      .get(`http://34.210.129.167/api/user/${id}/work-logs`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => dispatch(logData(response.data.workLogs.data)))
+      .catch((err) => console.log(err));
+  };
+};
 export const FilterLogs = (from, to) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
@@ -51,6 +64,23 @@ export const UpdateLogs = (logChange, id) => {
           Authorization: `Bearer ${token}`,
         },
       })
+      .then((response) => response)
+      .catch((err) => console.log(err));
+  };
+};
+export const UpdateHours = (workingHours, id) => {
+  const token = localStorage.getItem("token");
+  return () => {
+    axios
+      .patch(
+        `http://34.210.129.167/api/users/${id}/preferred-working-hours`,
+        { workingHours: `${workingHours}` },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => response)
       .catch((err) => console.log(err));
   };

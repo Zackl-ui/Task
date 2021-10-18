@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   GetLogs,
   CreateLogs,
   UpdateLogs,
   EditData,
   FilterLogs,
+  UpdateHours,
+  GetSpecLogs,
 } from "../../redux/actions/work.logs.actions";
 import { Form } from "react-bootstrap";
 import Modal from "react-modal";
-const WorkLog = () => {
+const WorkLog = (props) => {
+  const { id } = useParams();
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpenSettings, setIsOpenSettings] = useState(false);
   const [modalIsOpenUpdate, setIsOpenUpdate] = useState(false);
   const [logDate, setLogDate] = useState("");
   const [hours, setHours] = useState("");
+  const [workingHours, setWorkingHours] = useState();
   const [description, setDescription] = useState("");
   const [updateLogDate, setUpdateLogDate] = useState("");
   const [updateHours, setUpdateHours] = useState("");
@@ -81,14 +87,23 @@ const WorkLog = () => {
       padding: "32px 36px 52px 36px",
     },
   };
+  const openModalSettings = () => {
+    setIsOpenSettings(true);
+  };
+  const closeModalSettings = () => {
+    setIsOpenSettings(false);
+  };
   const dispatch = useDispatch();
   const logChange = useSelector((state) => state.WorkData.logChange);
   const log = useSelector((state) => state.WorkData.data);
+  const role = useSelector((state) => state.User.role);
+  const userId = useSelector((state) => state.User.userId);
   useEffect(() => {
-    dispatch(GetLogs());
-  }, []);
+    role === "user" ? dispatch(GetLogs()) : dispatch(GetSpecLogs(id));
+  }, [role]);
   return (
     <div className="work-log">
+      <h2 className="text-center">WorkLogs</h2>
       <div className="work-top">
         <div className="filter">
           <Form.Group
@@ -120,6 +135,11 @@ const WorkLog = () => {
           >
             All WorkLogs
           </button>
+          {localStorage.getItem("role") === "user" ? (
+            <button onClick={openModalSettings}>
+              <i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings
+            </button>
+          ) : null}
         </div>
         <div className="add">
           <button onClick={openModal} className="d-flex align-items-center">
@@ -153,7 +173,12 @@ const WorkLog = () => {
                   <p>{item.description}</p>
                 </div>
               </div>
-              <div className="box-bottom d-flex justify-content-between">
+
+              <div
+                className={`box-bottom d-flex justify-content-between ${
+                  item.is_under_hours && "red"
+                }`}
+              >
                 <div className="box-text d-flex">
                   <h3>Hours:</h3>
                   <p>{item.hours}</p>
@@ -173,7 +198,47 @@ const WorkLog = () => {
           );
         })}
       </div>
-
+      <Modal
+        isOpen={modalIsOpenSettings}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModalSettings}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h3 className="pop-head">Ser Working Hours</h3>
+        <div className="row pop-content mt-3">
+          <div className="form-group col-lg-12 col-md-12">
+            <label htmlFor="inputPassword4" className="form-label">
+              Working Hours
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              cols="10"
+              rows="1"
+              placeholder=""
+              value={workingHours}
+              onChange={(e) => setWorkingHours(e.target.value)}
+            ></input>
+          </div>
+        </div>
+        <div className="form-footer">
+          <button
+            className="save"
+            onClick={() => {
+              dispatch(UpdateHours(workingHours, userId));
+            }}
+          >
+            Set Working Hours
+          </button>
+          <button className="cancel-edit" onClick={closeModalSettings}>
+            Cancel
+          </button>
+        </div>
+        <div className="close-btn" onClick={closeModalSettings}>
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+      </Modal>
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}

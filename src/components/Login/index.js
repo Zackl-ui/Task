@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./index.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SignIn, SignUP } from "../../redux/actions/auth";
 import { useHistory } from "react-router-dom";
 function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.ErrorMsg.error);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -30,7 +31,7 @@ function Login() {
           <div className="login-inner">
             <div className="login-lft">
               <div class="brand">
-                <a href="#" class="logo">
+                <a href="#" className="logo">
                   Bilal<span>&nbsp;.</span>
                 </a>
 
@@ -41,7 +42,7 @@ function Login() {
 
                 <div class="success-msg">
                   <p>Great! You are one of our members now</p>
-                  <a href="#" class="profile">
+                  <a href="#" className="profile">
                     Your Profile
                   </a>
                 </div>
@@ -141,6 +142,7 @@ function Login() {
               </div>
             </div>
             <div className={`loginCard ${loginLeft && "change"}`}>
+              <span> {error.message}</span>
               <div className="session">
                 <div className="form">
                   <h4>

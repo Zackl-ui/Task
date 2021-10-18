@@ -8,9 +8,10 @@ import {
   SetPage,
   UpdateUser,
 } from "../../redux/actions/get.user.action";
+import { SET_ID } from "../../redux/actions/auth";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Table, Form, Pagination } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 const Users = () => {
@@ -114,6 +115,7 @@ const Users = () => {
   return (
     <>
       <div className="users">
+        <h2 className="text-center">Users</h2>
         <div className="users-top">
           <div className="filter">
             <Form.Group className="mr-3" controlId="exampleForm.ControlInput1">
@@ -145,6 +147,7 @@ const Users = () => {
               <th>Email</th>
               <th>Working Hours</th>
               <th>Role</th>
+              <th>WorkLogs</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -160,6 +163,17 @@ const Users = () => {
                     <td>{user.email}</td>
                     <td>{user.working_hours}</td>
                     <td>{user.roles[0].name}</td>
+                    <td>
+                      <Link
+                        to={`/work-logs/${user.id}`}
+                        onClick={() => {
+                          dispatch(SET_ID(user.id));
+                        }}
+                        className="view"
+                      >
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </Link>
+                    </td>
                     <td>
                       <button
                         onClick={() => dispatch(EditUser(user), openModal())}

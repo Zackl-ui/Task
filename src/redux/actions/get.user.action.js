@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Loading,ErrorMsg } from './error';
 const successMsg = (msg) => {
   toast.success(msg);
 };
@@ -9,14 +10,17 @@ const errorMsg = (msg) => {
 export const GetUser = (page) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
+    dispatch(Loading(true))
     axios
       .get(`http://34.210.129.167/api/users?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(SetUser(response.data.users)))
-      .catch((err) => console.log(err));
+      .then((response) =>
+        dispatch(SetUser(response.data.users), Loading(false))
+      )
+      .catch((err) => dispatch(ErrorMsg(err)));
   };
 };
 export const UpdateUser = (user, id) => {

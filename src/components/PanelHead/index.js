@@ -9,14 +9,20 @@ const PanelHead = () => {
         Time Manager<span>&nbsp;.</span>
       </a>
       <div className="panel-top">
-        <ul className="panel-link">
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-          <li>
-            <Link to="/work-logs">WorkLog</Link>
-          </li>
-        </ul>
+        {localStorage.getItem("role") === "user" ? (
+          <ul className="panel-link">
+            <li>
+              <Link to="/work-logs">WorkLog</Link>
+            </li>
+          </ul>
+        ) : (
+          <ul className="panel-link">
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          </ul>
+        )}
+
         <div className="logout">
           <button
             onClick={() => {

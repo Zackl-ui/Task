@@ -1,5 +1,4 @@
 import React from "react";
-import PanelContent from "../components/PanelContent";
 import PanelHead from "../components/PanelHead";
 const AppLayout = ({ children }) => {
   return (
