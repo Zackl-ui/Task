@@ -1,7 +1,7 @@
 export const ROUTES = {
-  login: "/",
+  auth: "/",
   users: "/users",
-  workLogs: `/work-logs`,
+  Logs: `/work-logs`,
   dashboard: "/dashboard",
-  workLogsId:`/work-logs/:id`
+  workLogsId: `/work-logs/:id`,
 };

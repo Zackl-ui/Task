@@ -1,0 +1,8 @@
+.dashboard-intro {
+  max-width: 85%;
+  width: 100%;
+  padding: 100px 150px;
+  min-height: 100vh;
+  height: 100%;
+  margin-left: auto;
+}

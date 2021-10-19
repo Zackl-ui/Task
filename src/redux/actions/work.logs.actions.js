@@ -1,4 +1,11 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+const successMsg = (msg) => {
+  toast.success(msg);
+};
+const errorMsg = (msg) => {
+  toast.error(msg);
+};
 export const GetLogs = () => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
@@ -8,8 +15,11 @@ export const GetLogs = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(logData(response.data.workLogs.data)))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        dispatch(logData(response.data.workLogs.data));
+        successMsg("WorkLogs rendered Successfully");
+      })
+      .catch((err) => errorMsg("Error getting WorkLogs"));
   };
 };
 export const GetSpecLogs = (id) => {
@@ -21,8 +31,11 @@ export const GetSpecLogs = (id) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(logData(response.data.workLogs.data)))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        dispatch(logData(response.data.workLogs.data));
+        successMsg("WorkLogs rendered Successfully");
+      })
+      .catch((err) => errorMsg("Error getting WorkLogs"));
   };
 };
 export const FilterLogs = (from, to) => {
@@ -34,11 +47,14 @@ export const FilterLogs = (from, to) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(logData(response.data.workLogs)))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        dispatch(logData(response.data.workLogs));
+        successMsg("Filtered Successfully");
+      })
+      .catch((err) => errorMsg("Error filtering WorkLogs"));
   };
 };
-export const CreateLogs = (data) => {
+export const CreateLogs = (data, closeModal) => {
   const token = localStorage.getItem("token");
   return () => {
     axios
@@ -51,11 +67,14 @@ export const CreateLogs = (data) => {
           },
         }
       )
-      .then((response) => response)
-      .catch((err) => console.log(err));
+      .then((response) => {
+        closeModal();
+        successMsg("WorkLogs Created Successfully");
+      })
+      .catch((err) => errorMsg("Error creating WorkLogs"));
   };
 };
-export const UpdateLogs = (logChange, id) => {
+export const UpdateLogs = (logChange, id, closeModalUpdate) => {
   const token = localStorage.getItem("token");
   return () => {
     axios
@@ -64,12 +83,16 @@ export const UpdateLogs = (logChange, id) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => response)
-      .catch((err) => console.log(err));
+      .then((response) => {
+        closeModalUpdate();
+        successMsg("WorkLogs Updated Successfully");
+      })
+      .catch((err) => errorMsg("Error updating WorkLogs"));
   };
 };
-export const UpdateHours = (workingHours, id) => {
+export const UpdateHours = (workingHours, closeModalSettings) => {
   const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
   return () => {
     axios
       .patch(
@@ -81,8 +104,11 @@ export const UpdateHours = (workingHours, id) => {
           },
         }
       )
-      .then((response) => response)
-      .catch((err) => console.log(err));
+      .then((response) => {
+        closeModalSettings();
+        successMsg("Preffered hours Updated Successfully");
+      })
+      .catch((err) => errorMsg("Error updating Preffered hours"));
   };
 };
 export const logData = (data) => {

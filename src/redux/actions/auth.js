@@ -1,5 +1,12 @@
 import axios from "axios";
 import { Loading, ErrorMsg } from "./error";
+import { toast } from "react-toastify";
+const successMsg = (msg) => {
+  toast.success(msg);
+};
+const errorMsg = (msg) => {
+  toast.error(msg);
+};
 const SignIn = (data, history) => {
   return (dispatch) => {
     dispatch(Loading(true));
@@ -7,18 +14,29 @@ const SignIn = (data, history) => {
       .post("http://34.210.129.167/api/login", { ...data }, {})
       .then((response) => {
         dispatch(Sign_In(response.data), Loading(false));
+        successMsg("Login Successfully");
         history.push("/dashboard");
       })
-      .catch((err) => dispatch(ErrorMsg(err.response.data)));
+      .catch((err) => {
+        dispatch(ErrorMsg(err.response.data));
+        errorMsg("Login Failed");
+      });
   };
 };
 const SignUP = (data, setLoginLeft) => {
   console.log(data);
-  return () => {
+
+  return (dispatch) => {
     axios
       .post("http://34.210.129.167/api/register", { ...data }, {})
-      .then((response) => setLoginLeft(false))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        setLoginLeft(false);
+        successMsg("SignUp Successfully");
+      })
+      .catch((err) => {
+        dispatch(ErrorMsg(err.response.data));
+        errorMsg("SignUp Failed");
+      });
   };
 };
 const Sign_In = (data) => {

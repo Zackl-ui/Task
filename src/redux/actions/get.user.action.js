@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Loading,ErrorMsg } from './error';
+import { Loading } from "./error";
 const successMsg = (msg) => {
   toast.success(msg);
 };
@@ -10,20 +10,21 @@ const errorMsg = (msg) => {
 export const GetUser = (page) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
-    dispatch(Loading(true))
+    dispatch(Loading(true));
     axios
       .get(`http://34.210.129.167/api/users?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) =>
-        dispatch(SetUser(response.data.users), Loading(false))
-      )
-      .catch((err) => dispatch(ErrorMsg(err)));
+      .then((response) => {
+        dispatch(SetUser(response.data.users), Loading(false));
+        successMsg("User rendered Successfully");
+      })
+      .catch((err) => errorMsg("Error getting user"));
   };
 };
-export const UpdateUser = (user, id) => {
+export const UpdateUser = (user, id, closeModal) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
     axios
@@ -32,8 +33,11 @@ export const UpdateUser = (user, id) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(successMsg("User updated Successfully")))
-      .catch((err) => dispatch(errorMsg("User update Error")));
+      .then((response) => {
+        closeModal();
+        successMsg("User updated Successfully");
+      })
+      .catch((err) => errorMsg("Error updating user"));
   };
 };
 export const DeleteUser = (user) => {
@@ -45,11 +49,11 @@ export const DeleteUser = (user) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => dispatch(successMsg("User deleted Successfully")))
-      .catch((err) => console.log(err));
+      .then((response) => successMsg("User deleted Successfully"))
+      .catch((err) => errorMsg("Error deleting user"));
   };
 };
-export const AddUser = (user, setClose) => {
+export const AddUser = (user, closeModalAdd) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
     axios
@@ -59,10 +63,10 @@ export const AddUser = (user, setClose) => {
         },
       })
       .then((response) => {
-        dispatch(setClose(true));
-        dispatch(successMsg("User added Successfully"));
+        closeModalAdd();
+        successMsg("User added Successfully");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => errorMsg("Error adding user"));
   };
 };
 const SetUser = (data) => {

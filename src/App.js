@@ -13,7 +13,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        
         <Routes />
       </Switch>
     </Router>

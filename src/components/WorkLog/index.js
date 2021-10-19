@@ -4,27 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   GetLogs,
-  CreateLogs,
-  UpdateLogs,
   EditData,
   FilterLogs,
-  UpdateHours,
   GetSpecLogs,
 } from "../../redux/actions/work.logs.actions";
 import { Form } from "react-bootstrap";
-import Modal from "react-modal";
+import UpdateWorkLogModal from "../Modals/UpdateWorkLogModal";
+import CreateWorkLogModal from "../Modals/CreateWorkLogModal";
+import WorkLogSettingsModal from "../Modals/WorkLogSettingsModal";
 const WorkLog = (props) => {
   const { id } = useParams();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalIsOpenSettings, setIsOpenSettings] = useState(false);
   const [modalIsOpenUpdate, setIsOpenUpdate] = useState(false);
-  const [logDate, setLogDate] = useState("");
-  const [hours, setHours] = useState("");
-  const [workingHours, setWorkingHours] = useState();
-  const [description, setDescription] = useState("");
-  const [updateLogDate, setUpdateLogDate] = useState("");
-  const [updateHours, setUpdateHours] = useState("");
-  const [updateDescription, setUpdateDescription] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const handleEmpty = () => {
@@ -34,70 +26,15 @@ const WorkLog = (props) => {
   const openModal = () => {
     setIsOpen(true);
   };
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const customStyles = {
-    overlay: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.75)",
-      zIndex: 999999,
-    },
-    content: {
-      top: "50%",
-      left: "55%",
-      right: "auto",
-      bottom: "auto",
-      transform: "translate(-50%, -50%)",
-      maxWidth: 500,
-      width: "100%",
-      borderRadius: "15px",
-      padding: "32px 36px 52px 36px",
-    },
-  };
   const openModalUpdate = () => {
     setIsOpenUpdate(true);
-  };
-  const closeModalUpdate = () => {
-    setIsOpenUpdate(false);
-  };
-  const customStylesUpdate = {
-    overlay: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.75)",
-      zIndex: 999999,
-    },
-    content: {
-      top: "50%",
-      left: "55%",
-      right: "auto",
-      bottom: "auto",
-      transform: "translate(-50%, -50%)",
-      maxWidth: 500,
-      width: "100%",
-      borderRadius: "15px",
-      padding: "32px 36px 52px 36px",
-    },
   };
   const openModalSettings = () => {
     setIsOpenSettings(true);
   };
-  const closeModalSettings = () => {
-    setIsOpenSettings(false);
-  };
   const dispatch = useDispatch();
-  const logChange = useSelector((state) => state.WorkData.logChange);
   const log = useSelector((state) => state.WorkData.data);
   const role = useSelector((state) => state.User.role);
-  const userId = useSelector((state) => state.User.userId);
   useEffect(() => {
     role === "user" ? dispatch(GetLogs()) : dispatch(GetSpecLogs(id));
   }, [role]);
@@ -198,194 +135,15 @@ const WorkLog = (props) => {
           );
         })}
       </div>
-      <Modal
-        isOpen={modalIsOpenSettings}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModalSettings}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h3 className="pop-head">Ser Working Hours</h3>
-        <div className="row pop-content mt-3">
-          <div className="form-group col-lg-12 col-md-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Working Hours
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={workingHours}
-              onChange={(e) => setWorkingHours(e.target.value)}
-            ></input>
-          </div>
-        </div>
-        <div className="form-footer">
-          <button
-            className="save"
-            onClick={() => {
-              dispatch(UpdateHours(workingHours, userId));
-            }}
-          >
-            Set Working Hours
-          </button>
-          <button className="cancel-edit" onClick={closeModalSettings}>
-            Cancel
-          </button>
-        </div>
-        <div className="close-btn" onClick={closeModalSettings}>
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-      </Modal>
-      <Modal
-        isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h3 className="pop-head">Add WorkLog</h3>
-        <div className="row pop-content mt-3">
-          <div className="form-group col-lg-12 col-md-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Log Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={logDate}
-              onChange={(e) => setLogDate(e.target.value)}
-            ></input>
-          </div>
-          <div className="form-group col-lg-12 col-md-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Hours
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
-            ></input>
-          </div>
-          <div className="form-group col-lg-12 col-md-12 mt-2">
-            <label htmlFor="inputPassword4" className="form-label">
-              Description
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></input>
-          </div>
-        </div>
-        <div className="form-footer">
-          <button
-            className="save"
-            onClick={() =>
-              dispatch(CreateLogs({ logDate, hours, description }))
-            }
-          >
-            Add WorkLog
-          </button>
-          <button className="cancel-edit" onClick={closeModal}>
-            Cancel
-          </button>
-        </div>
-        <div className="close-btn" onClick={closeModal}>
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-      </Modal>
-      <Modal
-        isOpen={modalIsOpenUpdate}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModalUpdate}
-        style={customStylesUpdate}
-        contentLabel="Example Modal"
-      >
-        <h3 className="pop-head">Add WorkLog</h3>
-        <div className="row pop-content mt-3">
-          <div className="form-group col-lg-12 col-md-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Log Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={updateLogDate}
-              onChange={(e) => setUpdateLogDate(e.target.value)}
-            ></input>
-          </div>
-          <div className="form-group col-lg-12 col-md-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Hours
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={updateHours}
-              onChange={(e) => setUpdateHours(e.target.value)}
-            ></input>
-          </div>
-          <div className="form-group col-lg-12 col-md-12 mt-2">
-            <label htmlFor="inputPassword4" className="form-label">
-              Description
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              cols="10"
-              rows="1"
-              placeholder=""
-              value={updateDescription}
-              onChange={(e) => setUpdateDescription(e.target.value)}
-            ></input>
-          </div>
-        </div>
-        <div className="form-footer">
-          <button
-            className="save"
-            onClick={() =>
-              dispatch(
-                UpdateLogs(
-                  {
-                    logDate: updateLogDate,
-                    hours: updateHours,
-                    description: updateDescription,
-                  },
-                  logChange.id
-                )
-              )
-            }
-          >
-            Update Work Log
-          </button>
-          <button className="cancel-edit" onClick={closeModalUpdate}>
-            Cancel
-          </button>
-        </div>
-        <div className="close-btn" onClick={closeModalUpdate}>
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-      </Modal>
+      <WorkLogSettingsModal
+        modalIsOpenSettings={modalIsOpenSettings}
+        setIsOpenSettings={setIsOpenSettings}
+      />
+      <CreateWorkLogModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+      <UpdateWorkLogModal
+        modalIsOpenUpdate={modalIsOpenUpdate}
+        setIsOpenUpdate={setIsOpenUpdate}
+      />
     </div>
   );
 };
