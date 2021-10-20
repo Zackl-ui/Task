@@ -6,3 +6,24 @@
   height: 100%;
   margin-left: auto;
 }
+.dashboard-intro h2 {
+  font-size: 80px;
+  line-height: 76px;
+}
+.dashboard-intro h3 {
+  font-size: 80px;
+  line-height: 76px;
+  color: #add8e6;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.dashboard-intro h4 {
+  font-size: 80px;
+  line-height: 76px;
+}
+.dashboard-intro h6 {
+  font-size: 30px;
+  line-height: 36px;
+  margin-top: 20px;
+  color: red;
+}

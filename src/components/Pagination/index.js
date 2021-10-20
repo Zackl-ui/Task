@@ -22,15 +22,11 @@ const UsersPagination = () => {
         </Pagination.Item>
       )}
       <Pagination.Item active>{page}</Pagination.Item>
-      {page === 51 ? null : (
-        <Pagination.Item
-          onClick={() =>
-            page < totalPage ? dispatch(SetPage(page + 1)) : null
-          }
-        >
-          {page + 1}
-        </Pagination.Item>
-      )}
+      <Pagination.Item
+        onClick={() => (page < totalPage ? dispatch(SetPage(page + 1)) : null)}
+      >
+        {page + 1}
+      </Pagination.Item>
       <Pagination.Next
         onClick={() => (page < totalPage ? dispatch(SetPage(page + 1)) : null)}
       />

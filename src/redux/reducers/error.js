@@ -1,6 +1,6 @@
 const obj = {
   error: "",
-  loading: "",
+  loading: false,
 };
 const Error = (state = obj, action) => {
   switch (action.type) {

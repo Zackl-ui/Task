@@ -57,7 +57,8 @@ h2,
 h3,
 h4,
 h5,
-h6,p {
+h6,
+p {
   margin: 0;
 }
 .container {
@@ -67,4 +68,43 @@ h6,p {
 .dashboard {
   background-color: #f7edd5;
   display: flex;
+}
+.loader {
+  min-height: 555px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading {
+  position: relative;
+}
+.loading:before,
+.loading:after {
+  content: "";
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  width: 80px;
+  margin: 0 auto;
+  background-color: currentcolor;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: loader-08 2s infinite ease-in-out;
+  z-index: 9;
+  height: 80px;
+}
+.loading:after {
+  animation-delay: -1s;
+}
+@keyframes loader-08 {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
 }

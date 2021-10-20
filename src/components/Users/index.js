@@ -14,6 +14,8 @@ const User = ({ openModal, openModalAdd }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.GetUser.data);
   const page = useSelector((state) => state.GetUser.page);
+  const loading = useSelector((state) => state.Helper.loading);
+  console.log(loading);
   const [filteredUsers, setFilteredUsers] = useState(users);
   useEffect(() => {
     dispatch(GetUser(page));
@@ -56,62 +58,69 @@ const User = ({ openModal, openModalAdd }) => {
           </button>
         </div>
       </div>
-
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Working Hours</th>
-            <th>Role</th>
-            <th>WorkLogs</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers
-            .filter((users) => users.id !== 1)
-            .map((user) => {
-              return (
-                <tr>
-                  <td>{user.id}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.working_hours}</td>
-                  <td>{user.roles[0].name}</td>
-                  <td>
-                    <Link
-                      to={`/work-logs/${user.id}`}
-                      onClick={() => {
-                        dispatch(SET_ID(user.id));
-                      }}
-                      className="view"
-                    >
-                      <i class="fa fa-eye" aria-hidden="true"></i>
-                    </Link>
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => dispatch(EditUser(user), openModal())}
-                      className="edit"
-                    >
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                    <button
-                      onClick={() => dispatch(DeleteUser(user))}
-                      className="delete"
-                    >
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      {loading ? (
+        <div className="loader">
+          <div className="loading"></div>
+        </div>
+      ) : (
+        <>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Working Hours</th>
+                <th>Role</th>
+                <th>WorkLogs</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers
+                .filter((users) => users.id !== 1)
+                .map((user) => {
+                  return (
+                    <tr>
+                      <td>{user.id}</td>
+                      <td>{user.firstName}</td>
+                      <td>{user.lastName}</td>
+                      <td>{user.email}</td>
+                      <td>{user.working_hours}</td>
+                      <td>{user.roles[0].name}</td>
+                      <td>
+                        <Link
+                          to={`/work-logs/${user.id}`}
+                          onClick={() => {
+                            dispatch(SET_ID(user.id));
+                          }}
+                          className="view"
+                        >
+                          <i class="fa fa-eye" aria-hidden="true"></i>
+                        </Link>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => dispatch(EditUser(user), openModal())}
+                          className="edit"
+                        >
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button
+                          onClick={() => dispatch(DeleteUser(user))}
+                          className="delete"
+                        >
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </>
+      )}
     </>
   );
 };

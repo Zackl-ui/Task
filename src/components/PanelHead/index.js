@@ -12,11 +12,17 @@ const PanelHead = () => {
         {localStorage.getItem("role") === "user" ? (
           <ul className="panel-link">
             <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
               <Link to="/work-logs">WorkLog</Link>
             </li>
           </ul>
         ) : (
           <ul className="panel-link">
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
             <li>
               <Link to="/users">Users</Link>
             </li>

@@ -18,8 +18,8 @@ export const GetUser = (page) => {
         },
       })
       .then((response) => {
-        dispatch(SetUser(response.data.users), Loading(false));
-        successMsg("User rendered Successfully");
+        dispatch(Loading(false));
+        dispatch(SetUser(response.data.users));
       })
       .catch((err) => errorMsg("Error getting user"));
   };
@@ -27,6 +27,7 @@ export const GetUser = (page) => {
 export const UpdateUser = (user, id, closeModal) => {
   const token = localStorage.getItem("token");
   return (dispatch) => {
+    dispatch(Loading(true));
     axios
       .put(`http://34.210.129.167/api/users/${id.id}`, user, {
         headers: {
@@ -36,6 +37,7 @@ export const UpdateUser = (user, id, closeModal) => {
       .then((response) => {
         closeModal();
         successMsg("User updated Successfully");
+        Loading(false);
       })
       .catch((err) => errorMsg("Error updating user"));
   };

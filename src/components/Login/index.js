@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 function Login({ setLoginLeft, loginLeft }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.ErrorMsg.error);
+  const error = useSelector((state) => state.Helper.error);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);

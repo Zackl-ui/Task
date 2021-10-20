@@ -35,116 +35,133 @@ const WorkLog = (props) => {
   const dispatch = useDispatch();
   const log = useSelector((state) => state.WorkData.data);
   const role = useSelector((state) => state.User.role);
+  const loading = useSelector((state) => state.Helper.loading);
   useEffect(() => {
     role === "user" ? dispatch(GetLogs()) : dispatch(GetSpecLogs(id));
   }, [role]);
   return (
-    <div className="work-log">
-      <h2 className="text-center">WorkLogs</h2>
-      <div className="work-top">
-        <div className="filter">
-          <Form.Group
-            className="mr-3 mb-0"
-            controlId="exampleForm.ControlInput1"
-          >
-            <Form.Control
-              type="date"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-0">
-            <Form.Control
-              type="date"
-              placeholder="Search by First Name"
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-            />
-          </Form.Group>
-          <button onClick={() => dispatch(FilterLogs(fromDate, toDate))}>
-            Filter
-          </button>
-          <button
-            onClick={() => {
-              dispatch(GetLogs());
-              handleEmpty();
-            }}
-          >
-            All WorkLogs
-          </button>
-          {localStorage.getItem("role") === "user" ? (
-            <button onClick={openModalSettings}>
-              <i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings
+    <>
+      <div className="work-log">
+        <h2 className="text-center">WorkLogs</h2>
+        <div className="work-top">
+          <div className="filter">
+            <Form.Group
+              className="mr-3 mb-0"
+              controlId="exampleForm.ControlInput1"
+            >
+              <Form.Control
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-0">
+              <Form.Control
+                type="date"
+                placeholder="Search by First Name"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
+            </Form.Group>
+            <button onClick={() => dispatch(FilterLogs(fromDate, toDate))}>
+              Filter
             </button>
-          ) : null}
+            <button
+              onClick={() => {
+                dispatch(GetLogs());
+                handleEmpty();
+              }}
+            >
+              All WorkLogs
+            </button>
+            {localStorage.getItem("role") === "user" ? (
+              <button onClick={openModalSettings}>
+                <i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings
+              </button>
+            ) : null}
+          </div>
+          <div className="add">
+            <button onClick={openModal} className="d-flex align-items-center">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              <h6 className="mb-0 ml-2">Add WorkLog</h6>
+            </button>
+          </div>
         </div>
-        <div className="add">
-          <button onClick={openModal} className="d-flex align-items-center">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-            <h6 className="mb-0 ml-2">Add WorkLog</h6>
-          </button>
-        </div>
-      </div>
-      <div className="work-bottom">
-        {log.map((item) => {
-          return (
-            <div className="box">
-              <div className="box-top">
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <h3>Id:</h3>
-                    <p>{item.id}</p>
-                  </div>
+        {loading ? (
+          <div className="loader">
+            <div className="loading"></div>
+          </div>
+        ) : (
+          <>
+            <div className="work-bottom">
+              {log.map((item) => {
+                return (
+                  <div className="box">
+                    <div className="box-top">
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <h3>Id:</h3>
+                          <p>{item.id}</p>
+                        </div>
 
-                  <div>
-                    <h3>Log Date:</h3>
-                    <p>{item.log_date}</p>
-                  </div>
-                </div>
-                <div className="box-column">
-                  <h3>Created At:</h3>
-                  <p>{item.created_at}</p>
-                </div>
-                <div className="box-column">
-                  <h3>Description:</h3>
-                  <p>{item.description}</p>
-                </div>
-              </div>
+                        <div>
+                          <h3>Log Date:</h3>
+                          <p>{item.log_date}</p>
+                        </div>
+                      </div>
+                      <div className="box-column">
+                        <h3>Created At:</h3>
+                        <p>{item.created_at}</p>
+                      </div>
+                      <div className="box-column">
+                        <h3>Description:</h3>
+                        <p>{item.description}</p>
+                      </div>
+                    </div>
 
-              <div
-                className={`box-bottom d-flex justify-content-between ${
-                  item.is_under_hours && "red"
-                }`}
-              >
-                <div className="box-text d-flex">
-                  <h3>Hours:</h3>
-                  <p>{item.hours}</p>
-                </div>
-                <div className="box-button">
-                  <button
-                    onClick={() => {
-                      dispatch(EditData(item));
-                      openModalUpdate();
-                    }}
-                  >
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
+                    <div
+                      className={`box-bottom d-flex justify-content-between ${
+                        item.is_under_hours && "red"
+                      }`}
+                    >
+                      <div className="box-text d-flex">
+                        <h3>Hours:</h3>
+                        <p>{item.hours}</p>
+                      </div>
+                      <div className="box-button">
+                        <button
+                          onClick={() => {
+                            dispatch(EditData(item));
+                            openModalUpdate();
+                          }}
+                        >
+                          <i
+                            class="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+            <WorkLogSettingsModal
+              modalIsOpenSettings={modalIsOpenSettings}
+              setIsOpenSettings={setIsOpenSettings}
+            />
+            <CreateWorkLogModal
+              modalIsOpen={modalIsOpen}
+              setIsOpen={setIsOpen}
+            />
+            <UpdateWorkLogModal
+              modalIsOpenUpdate={modalIsOpenUpdate}
+              setIsOpenUpdate={setIsOpenUpdate}
+            />
+          </>
+        )}
       </div>
-      <WorkLogSettingsModal
-        modalIsOpenSettings={modalIsOpenSettings}
-        setIsOpenSettings={setIsOpenSettings}
-      />
-      <CreateWorkLogModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
-      <UpdateWorkLogModal
-        modalIsOpenUpdate={modalIsOpenUpdate}
-        setIsOpenUpdate={setIsOpenUpdate}
-      />
-    </div>
+    </>
   );
 };
 
