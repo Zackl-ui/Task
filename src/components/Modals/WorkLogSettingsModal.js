@@ -100,7 +100,7 @@ const WorkLogSettingsModal = ({ setIsOpenSettings, modalIsOpenSettings }) => {
           HandleClear();
         }}
       >
-        <i class="fa fa-times" aria-hidden="true"></i>
+        <i className="fa fa-times" aria-hidden="true"></i>
       </div>
     </Modal>
   );

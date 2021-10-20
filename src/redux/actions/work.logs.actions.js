@@ -76,11 +76,11 @@ export const CreateLogs = (data, closeModal) => {
       .catch((err) => errorMsg("Error creating WorkLogs"));
   };
 };
-export const DeleteLogs = () => {
+export const DeleteLogs = (id) => {
   const token = localStorage.getItem("token");
   return () => {
     axios
-      .post(`http://34.210.129.167/api/work-logs`, {
+      .delete(`http://34.210.129.167/api/work-logs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

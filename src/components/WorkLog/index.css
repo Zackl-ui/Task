@@ -54,13 +54,24 @@
 }
 .work-log .work-bottom .box {
   background-color: #fff;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 10px 30px rgb(0 0 0 / 16%);
   border-radius: 8px;
   padding: 20px 0px 0px;
-  max-width: 23%;
+  max-width: 22%;
   width: 100%;
-  margin-right: 35px;
+  margin-right: 52px;
+  position: relative;
   margin-top: 35px;
+}
+.work-log .work-bottom .box .box-delete {
+  position: absolute;
+  top: 0;
+  right: -36px;
+  background-color: red;
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 0px 4px 4px 0px;
+  cursor: pointer;
 }
 .work-log .work-bottom .box:nth-child(4n) {
   margin-right: 0px;

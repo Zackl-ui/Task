@@ -8,7 +8,7 @@ const UsersPagination = () => {
   const totalPage = useSelector((state) => state.GetUser.totalPage);
   useEffect(() => {
     dispatch(GetUser(page));
-  }, [page]);
+  }, [dispatch, page]);
   return (
     <Pagination>
       <Pagination.Prev

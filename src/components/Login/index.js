@@ -35,13 +35,11 @@ function Login({ setLoginLeft, loginLeft }) {
                 placeholder="Email"
                 type="email"
                 name="email"
-                id="email"
                 autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-
-              <label htmlFor="email">Email:</label>
+              <label>Email:</label>
               {valid && !email ? (
                 <span className="error-message">Please enter an email *</span>
               ) : null}
@@ -52,12 +50,11 @@ function Login({ setLoginLeft, loginLeft }) {
                 placeholder="Password"
                 type="password"
                 name="password"
-                id="password"
                 autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label htmlFor="password">Password:</label>
+              <label>Password:</label>
               {valid && !password ? (
                 <span className="error-message">
                   Please enter an password *

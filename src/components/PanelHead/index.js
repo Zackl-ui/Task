@@ -5,9 +5,9 @@ const PanelHead = () => {
   const history = useHistory();
   return (
     <div className="panel-head">
-      <a href="#" class="logo">
+      <Link to="/dashboard" className="logo">
         Time Manager<span>&nbsp;.</span>
-      </a>
+      </Link>
       <div className="panel-top">
         {localStorage.getItem("role") === "user" ? (
           <ul className="panel-link">

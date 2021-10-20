@@ -7,6 +7,7 @@ import {
   EditData,
   FilterLogs,
   GetSpecLogs,
+  DeleteLogs,
 } from "../../redux/actions/work.logs.actions";
 import { Form } from "react-bootstrap";
 import UpdateWorkLogModal from "../Modals/UpdateWorkLogModal";
@@ -38,7 +39,7 @@ const WorkLog = (props) => {
   const loading = useSelector((state) => state.Helper.loading);
   useEffect(() => {
     role === "user" ? dispatch(GetLogs()) : dispatch(GetSpecLogs(id));
-  }, [role]);
+  }, [role, dispatch, id]);
   return (
     <>
       <div className="work-log">
@@ -76,13 +77,13 @@ const WorkLog = (props) => {
             </button>
             {localStorage.getItem("role") === "user" ? (
               <button onClick={openModalSettings}>
-                <i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings
+                <i className="fa fa-cog mr-2" aria-hidden="true"></i>Settings
               </button>
             ) : null}
           </div>
           <div className="add">
             <button onClick={openModal} className="d-flex align-items-center">
-              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              <i className="fa fa-plus-circle" aria-hidden="true"></i>
               <h6 className="mb-0 ml-2">Add WorkLog</h6>
             </button>
           </div>
@@ -136,12 +137,20 @@ const WorkLog = (props) => {
                           }}
                         >
                           <i
-                            class="fa fa-pencil-square-o"
+                            className="fa fa-pencil-square-o"
                             aria-hidden="true"
                           ></i>
                         </button>
                       </div>
                     </div>
+                    {localStorage.getItem("role") === "user" ? (
+                      <div
+                        className="box-delete"
+                        onClick={() => dispatch(DeleteLogs(item.id))}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}

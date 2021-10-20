@@ -19,7 +19,7 @@ const User = ({ openModal, openModalAdd }) => {
   const [filteredUsers, setFilteredUsers] = useState(users);
   useEffect(() => {
     dispatch(GetUser(page));
-  }, [page]);
+  }, [page, dispatch]);
   useEffect(() => {
     setFilteredUsers(users);
   }, [users]);
@@ -48,12 +48,12 @@ const User = ({ openModal, openModalAdd }) => {
               placeholder="Search by First Name"
               onChange={handleChange}
             />
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <i className="fa fa-search" aria-hidden="true"></i>
           </Form.Group>
         </div>
         <div className="add">
           <button onClick={openModalAdd} className="d-flex align-items-center">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            <i className="fa fa-plus-circle" aria-hidden="true"></i>
             <h6 className="mb-0 ml-2">Add User</h6>
           </button>
         </div>
@@ -97,7 +97,7 @@ const User = ({ openModal, openModalAdd }) => {
                           }}
                           className="view"
                         >
-                          <i class="fa fa-eye" aria-hidden="true"></i>
+                          <i className="fa fa-eye" aria-hidden="true"></i>
                         </Link>
                       </td>
                       <td>
@@ -105,13 +105,13 @@ const User = ({ openModal, openModalAdd }) => {
                           onClick={() => dispatch(EditUser(user), openModal())}
                           className="edit"
                         >
-                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                          <i className="fa fa-pencil" aria-hidden="true"></i>
                         </button>
                         <button
                           onClick={() => dispatch(DeleteUser(user))}
                           className="delete"
                         >
-                          <i class="fa fa-trash" aria-hidden="true"></i>
+                          <i className="fa fa-trash" aria-hidden="true"></i>
                         </button>
                       </td>
                     </tr>

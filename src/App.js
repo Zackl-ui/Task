@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import Routes from "./routes";
 import "./App.css";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(SetToken());
-  }, []);
+  }, [dispatch]);
   return (
     <Router>
       <Switch>
