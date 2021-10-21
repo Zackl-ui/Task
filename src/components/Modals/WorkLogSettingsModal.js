@@ -77,7 +77,7 @@ const WorkLogSettingsModal = ({ setIsOpenSettings, modalIsOpenSettings }) => {
         <button
           className="save"
           onClick={() => {
-            dispatch(UpdateHours(workingHours), closeModalSettings);
+            dispatch(UpdateHours(workingHours, closeModalSettings));
             HandleClear();
           }}
         >

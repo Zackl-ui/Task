@@ -58,7 +58,7 @@ export const FilterLogs = (from, to) => {
 };
 export const CreateLogs = (data, closeModal) => {
   const token = localStorage.getItem("token");
-  return () => {
+  return (dispatch) => {
     axios
       .post(
         `http://34.210.129.167/api/work-logs`,
@@ -70,6 +70,7 @@ export const CreateLogs = (data, closeModal) => {
         }
       )
       .then((response) => {
+        dispatch(GetLogs());
         closeModal();
         successMsg("WorkLogs Created Successfully");
       })
@@ -78,7 +79,7 @@ export const CreateLogs = (data, closeModal) => {
 };
 export const DeleteLogs = (id) => {
   const token = localStorage.getItem("token");
-  return () => {
+  return (dispatch) => {
     axios
       .delete(`http://34.210.129.167/api/work-logs/${id}`, {
         headers: {
@@ -86,6 +87,7 @@ export const DeleteLogs = (id) => {
         },
       })
       .then((response) => {
+        dispatch(GetLogs());
         successMsg("WorkLogs Deleted Successfully");
       })
       .catch((err) => errorMsg("Error deleting WorkLogs"));
@@ -93,7 +95,7 @@ export const DeleteLogs = (id) => {
 };
 export const UpdateLogs = (logChange, id, closeModalUpdate) => {
   const token = localStorage.getItem("token");
-  return () => {
+  return (dispatch) => {
     axios
       .put(`http://34.210.129.167/api/work-logs/${id}`, logChange, {
         headers: {
@@ -101,7 +103,7 @@ export const UpdateLogs = (logChange, id, closeModalUpdate) => {
         },
       })
       .then((response) => {
-        closeModalUpdate();
+        dispatch(GetLogs());
         successMsg("WorkLogs Updated Successfully");
       })
       .catch((err) => errorMsg("Error updating WorkLogs"));
@@ -110,7 +112,7 @@ export const UpdateLogs = (logChange, id, closeModalUpdate) => {
 export const UpdateHours = (workingHours, closeModalSettings) => {
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
-  return () => {
+  return (dispatch) => {
     axios
       .patch(
         `http://34.210.129.167/api/users/${id}/preferred-working-hours`,
@@ -122,6 +124,7 @@ export const UpdateHours = (workingHours, closeModalSettings) => {
         }
       )
       .then((response) => {
+        dispatch(GetLogs());
         closeModalSettings();
         successMsg("Preffered hours Updated Successfully");
       })

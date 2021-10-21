@@ -39,7 +39,8 @@ const WorkLog = (props) => {
   const loading = useSelector((state) => state.Helper.loading);
   useEffect(() => {
     role === "user" ? dispatch(GetLogs()) : dispatch(GetSpecLogs(id));
-  }, [role, dispatch, id]);
+    //eslint-disable-next-line
+  }, [role,id]);
   return (
     <>
       <div className="work-log">

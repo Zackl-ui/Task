@@ -35,6 +35,7 @@ export const UpdateUser = (user, id, closeModal) => {
         },
       })
       .then((response) => {
+        dispatch(GetUser());
         closeModal();
         successMsg("User updated Successfully");
         Loading(false);
@@ -51,7 +52,10 @@ export const DeleteUser = (user) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => successMsg("User deleted Successfully"))
+      .then((response) => {
+        dispatch(GetUser());
+        successMsg("User deleted Successfully");
+      })
       .catch((err) => errorMsg("Error deleting user"));
   };
 };
@@ -65,6 +69,7 @@ export const AddUser = (user, closeModalAdd) => {
         },
       })
       .then((response) => {
+        dispatch(GetUser());
         closeModalAdd();
         successMsg("User added Successfully");
       })
